@@ -1,0 +1,40 @@
+[ng-cloak] {
+    display: none;
+}
+.googlemap {
+    height: 240px;
+    margin-top: 20px;
+}
+.m-t-50 {
+    margin: 50px 0px;
+}
+.m-t-30 {
+    margin: 30px 0px;
+}
+.center {
+    text-align: center;
+}
+.huge {
+    font-size: 100px;
+}
+.crimson {
+    color: crimson;
+}
+.hot {
+    color: orangered;
+}
+.cold {
+    color: #1b6d85;
+}
+.warm {
+    color: sandybrown;
+}
+.yellow {
+    color: yellow;
+}
+
+
+.air {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}

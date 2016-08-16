@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Weather App</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+<body ng-app="zvrapp" ng-cloak>
+<div class="container" role="main" ng-controller="mainController as $ctrl">
+    <div class="page-header ">
+    <div class="center m-t-50"><i class="wi wi-solar-eclipse huge"></i></div>
+    </div>
+
+    <div class="page-header">
+    <h1>Weather for {{$ctrl.model.days[$ctrl.model.activeTab] | lowercase}} in <span class="crimson">{{$ctrl.model.placeName}}</span></h1>
+    </div>
+
+    <angucomplete id="citylocator" inputclass="form-control"
+        searchfields="name" titlefield="name"
+        minlength="2" pause="100" placeholder="{{$ctrl.model.placeName}}"
+        selectedobject="$ctrl.model.placeName" localdata="$ctrl.model.placesIndex">
+    </angucomplete>
+
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <ul class="nav nav-tabs" role="tablist">
+                <li ng-repeat="(day, text) in $ctrl.model.days" ng-class="{'active': $ctrl.model.activeTab == day}" role="presentation">
+                <a href="#" ng-click="$ctrl.showTab(day);">{{text}}</a>
+                </li>
+            </ul>
+            <div class="row">
+            <div ng-if="$ctrl.model.activeTab === 1" ng-repeat="item in $ctrl.model.data">
+                <div class="col-md-6 col-lg-6 col-sm-6 center m-t-30">
+                <h1><span class="cold">+{{item.temperature_min | number:0}}<span> .. <span class="hot">+{{item.temperature_max | number:0}}</span><i class="wi wi-celsius"></i></h1>
+                <h2>{{item.precipitation_probability}} <i class="wi wi-humidity"></i> | {{item.precipitation_mm}}mm</h2>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 center m-t-30">
+                <h1><i class="wi wi-{{item.precipitation_probability | weatherOracul}} huge"></i></h1>
+                </div>
+            </div>
+            <div class="center" ng-if="$ctrl.model.activeTab !== 1">
+                <div class="{{$ctrl.model.activeTab | classModifier:$index }}" ng-repeat="item in $ctrl.model.data">
+                <h3>{{item.datetime | dayExtractor:$ctrl.model.activeTab:$index }}</h3>
+                <p>Max: <span class="hot">+{{item.temperature_max | number:0}}<i class="wi wi-celsius"></i></span></p>
+                <p>Min: <span class="cold">+{{item.temperature_min | number:0}}<i class="wi wi-celsius"></i></span></p>
+                <p>{{item.precipitation_probability}} <i class="wi wi-humidity"></i> | {{item.precipitation_mm}}mm</p>
+                <h1><i class="wi wi-{{item.precipitation_probability | weatherOracul}}"></i></h1>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4"><div class="googlemap"></div></div>
+    </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCntcf-DZLgnzQ480iEMr-X59grj1QQWVE"></script>
+</body>
+</html>
